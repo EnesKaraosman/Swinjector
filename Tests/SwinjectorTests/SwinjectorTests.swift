@@ -20,9 +20,17 @@ class TestClass: TestProtocol, Hashable {
 }
 
 final class SwinjectorTests: XCTestCase {
-    func testRegisterFactoryIsRegistered() throws {
+    override func setUp() {
+        super.setUp()
         GetIt.I.reset()
-        
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        GetIt.I.reset()
+    }
+    
+    func testRegisterFactoryIsRegistered() throws {
         GetIt.I.registerFactory(TestProtocol.self) {
             TestClass()
         }
@@ -31,16 +39,12 @@ final class SwinjectorTests: XCTestCase {
     }
     
     func testRegisterSingletonIsRegistered() throws {
-        GetIt.I.reset()
-        
         GetIt.I.registerSingleton(TestProtocol.self, instance: TestClass())
         
         XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
     }
     
     func testRegisterLazySingletonIsRegistered() throws {
-        GetIt.I.reset()
-        
         GetIt.I.registerLazySingleton(TestProtocol.self) {
             TestClass()
         }
@@ -49,8 +53,6 @@ final class SwinjectorTests: XCTestCase {
     }
     
     func testRegisterLazySingletonIsReallyASingleton() throws {
-        GetIt.I.reset()
-        
         let clazz = TestClass()
         
         GetIt.I.registerLazySingleton(TestProtocol.self) {
@@ -60,14 +62,11 @@ final class SwinjectorTests: XCTestCase {
         print(clazz.hashValue)
         
         guard let getClazz = GetIt.I(TestProtocol.self) as? TestClass else { return }
-        print(getClazz.hashValue)
         
         XCTAssertEqual(clazz, getClazz)
     }
     
     func testLazySingletonByAnnotation() throws {
-        GetIt.I.reset()
-        
         let clazz = TestClass()
         
         GetIt.I.registerLazySingleton(TestProtocol.self) {
