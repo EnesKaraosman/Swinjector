@@ -15,18 +15,25 @@ protocol Logger {
 
 class LoggerImpl: Logger {
     init() {
-        debugPrint("Logger.init")
+        d("Logger.init")
+    }
+    
+    var prefix: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss.SSS"
+        let timestamp = dateFormatter.string(from: Date())
+        return timestamp
     }
     
     func d(_ args: String...) {
-        debugPrint("Logger.d [🐛]: \(args)")
+        debugPrint("\(prefix) d [🐛]: \(args)")
     }
     
     func e(_ args: String...) {
-        debugPrint("Logger.e [💥]: \(args)")
+        debugPrint("\(prefix) e [💥]: \(args)")
     }
     
     func i(_ args: String...) {
-        debugPrint("Logger.i [📢]: \(args)")
+        debugPrint("\(prefix) i [📢]: \(args)")
     }
 }

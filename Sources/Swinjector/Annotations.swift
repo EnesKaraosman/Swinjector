@@ -9,15 +9,15 @@ import Foundation
 
 @propertyWrapper public struct Injected<T> {
 
-    private var dependency: T
+    private var dependency: () -> T
 
     public init(_ serviceType: T.Type) {
         assert(GetIt.I.isRegistered(serviceType), "\(serviceType) is not registered to GetIt")
-        dependency = GetIt.I(serviceType)!
+        dependency = { GetIt.I(serviceType)! }
     }
 
     /// Manages the wrapped dependency.
-    public var wrappedValue: T {
+    public var wrappedValue: () -> T {
         get { return dependency }
         mutating set { dependency = newValue }
     }
