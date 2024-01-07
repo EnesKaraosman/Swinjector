@@ -12,6 +12,7 @@ import Foundation
     private var dependency: T
 
     public init(_ serviceType: T.Type) {
+        assert(GetIt.I.isRegistered(serviceType), "\(serviceType) is not registered to GetIt")
         dependency = GetIt.I(serviceType)!
     }
 
