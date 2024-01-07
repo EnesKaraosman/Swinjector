@@ -64,4 +64,18 @@ final class SwinjectorTests: XCTestCase {
         
         XCTAssertEqual(clazz, getClazz)
     }
+    
+    func testLazySingletonByAnnotation() throws {
+        GetIt.I.reset()
+        
+        let clazz = TestClass()
+        
+        GetIt.I.registerLazySingleton(TestProtocol.self) {
+            clazz
+        }
+        
+        @Injected(TestProtocol.self) var test
+        
+        XCTAssertEqual(clazz, test as! TestClass)
+    }
 }
