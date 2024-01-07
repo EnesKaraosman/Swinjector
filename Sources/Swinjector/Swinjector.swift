@@ -68,7 +68,7 @@ public class GetIt: DependencyContainer {
            return factories[key] != nil || singletons[key] != nil || lazySingletons[key] != nil
        }
     
-    func callAsFunction<T>(_ serviceType: T.Type) -> T? {
+    public func callAsFunction<T>(_ serviceType: T.Type) -> T? {
         resolve(serviceType)
     }
 }
