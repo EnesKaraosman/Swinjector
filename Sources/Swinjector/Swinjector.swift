@@ -1,5 +1,4 @@
 public protocol DependencyContainer {
-    func register<T>(key: StaticString, _ factory: @escaping () -> T)
     func registerFactory<T>(_ serviceType: T.Type, factory: @escaping () -> T)
     func registerSingleton<T>(_ serviceType: T.Type, instance: T)
     func registerLazySingleton<T>(_ serviceType: T.Type, factory: @escaping () -> T)
@@ -10,7 +9,6 @@ public protocol DependencyContainer {
     func reset()
 }
 
-
 public class GetIt: DependencyContainer {
     public static let I = GetIt()
 
@@ -19,11 +17,6 @@ public class GetIt: DependencyContainer {
     private var factories: [String: () -> Any] = [:]
     private var singletons: [String: Any] = [:]
     private var lazySingletons: [String: () -> Any] = [:]
-
-    public func register<T>(key: StaticString = #function, _ factory: @escaping () -> T) {
-        let key = String(reflecting: key)
-        factories[key] = factory
-    }
     
     public func registerFactory<T>(_ serviceType: T.Type, factory: @escaping () -> T) {
         let key = String(describing: serviceType)

@@ -5,7 +5,7 @@ protocol TestProtocol {
     func test() -> Void
 }
 
-class TestClass: TestProtocol, Hashable {
+class TestClass: TestProtocol, Hashable, Identifiable {
     static func == (lhs: TestClass, rhs: TestClass) -> Bool {
         ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
     }
@@ -37,9 +37,8 @@ final class SwinjectorTests: XCTestCase {
             clazz
         }
         
-        print(clazz.hashValue)
-        
-        guard let getClazz = GetIt.I(TestProtocol.self) as? TestClass else { return }
+        guard let getClazz = GetIt.I(TestProtocol.self) as? TestClass
+        else { return }
         
         XCTAssertEqual(clazz, getClazz)
     }
