@@ -52,7 +52,7 @@ final class SwinjectorTests: XCTestCase {
         
         @Injected(TestProtocol.self) var test
         
-        XCTAssertEqual(clazz, test as! TestClass)
+        XCTAssertEqual(clazz, test() as! TestClass)
     }
 }
 

@@ -21,8 +21,7 @@ struct ContentView: View {
         .padding()
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                GetIt.I(Logger.self)?.d("Access method - 1")
-                logger.d("Access method - 2")
+                logger().d("Access by annotation")
             }
         }
     }
