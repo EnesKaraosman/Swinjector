@@ -30,28 +30,6 @@ final class SwinjectorTests: XCTestCase {
         GetIt.I.reset()
     }
     
-    func testRegisterFactoryIsRegistered() throws {
-        GetIt.I.registerFactory(TestProtocol.self) {
-            TestClass()
-        }
-        
-        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
-    }
-    
-    func testRegisterSingletonIsRegistered() throws {
-        GetIt.I.registerSingleton(TestProtocol.self, instance: TestClass())
-        
-        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
-    }
-    
-    func testRegisterLazySingletonIsRegistered() throws {
-        GetIt.I.registerLazySingleton(TestProtocol.self) {
-            TestClass()
-        }
-        
-        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
-    }
-    
     func testRegisterLazySingletonIsReallyASingleton() throws {
         let clazz = TestClass()
         
@@ -76,5 +54,59 @@ final class SwinjectorTests: XCTestCase {
         @Injected(TestProtocol.self) var test
         
         XCTAssertEqual(clazz, test as! TestClass)
+    }
+}
+
+// `isRegistered` tests
+extension SwinjectorTests {
+    func testRegisterFactoryIsRegistered() throws {
+        GetIt.I.registerFactory(TestProtocol.self) {
+            TestClass()
+        }
+        
+        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
+    }
+    
+    func testRegisterSingletonIsRegistered() throws {
+        GetIt.I.registerSingleton(TestProtocol.self, instance: TestClass())
+        
+        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
+    }
+    
+    func testRegisterLazySingletonIsRegistered() throws {
+        GetIt.I.registerLazySingleton(TestProtocol.self) {
+            TestClass()
+        }
+        
+        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
+    }
+}
+
+// `unregister` tests
+extension SwinjectorTests {
+    func testUnregisterLazySingleton() throws {
+        let clazz = TestClass()
+        
+        GetIt.I.registerLazySingleton(TestProtocol.self) {
+            clazz
+        }
+        
+        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
+        
+        GetIt.I.unregister(TestProtocol.self)
+        
+        XCTAssertFalse(GetIt.I.isRegistered(TestProtocol.self))
+    }
+    
+    func testUnregisterSingleton() throws {
+        let clazz = TestClass()
+        
+        GetIt.I.registerSingleton(TestProtocol.self, instance: clazz)
+        
+        XCTAssertTrue(GetIt.I.isRegistered(TestProtocol.self))
+        
+        GetIt.I.unregister(TestProtocol.self)
+        
+        XCTAssertFalse(GetIt.I.isRegistered(TestProtocol.self))
     }
 }
