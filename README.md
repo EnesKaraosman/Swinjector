@@ -1,5 +1,7 @@
 # Swinjector
 
+[![codecov](https://codecov.io/gh/EnesKaraosman/Swinjector/graph/badge.svg?token=4K5A5TQ9D6)](https://codecov.io/gh/EnesKaraosman/Swinjector)
+
 > This package is not ready to be used in production yet. It's created for PoC purpose.
 
 TODO
@@ -8,8 +10,9 @@ TODO
 - [ ] Add more annotations to register dependencies easily. Like @Singleton, @LazySingleton, @Factory (SwiftGen?)
 - [ ] Support registering multiple instance of the same type?
 - [ ] Add code documentation
-- [ ] Unit test code coverage %100
 - [x] Add unit test execution github action
+- [x] Integrate code coverage app (codecov)
+  - [ ] Unit test code coverage %100
 
 ## Register dependencies
 
