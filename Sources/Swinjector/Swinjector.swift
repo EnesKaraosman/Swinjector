@@ -1,7 +1,7 @@
 public protocol DependencyContainer {
-    func registerFactory<T>(_ serviceType: T.Type, factory: @escaping () -> T)
-    func registerSingleton<T>(_ serviceType: T.Type, instance: T)
-    func registerLazySingleton<T>(_ serviceType: T.Type, factory: @escaping () -> T)
+    @discardableResult func registerFactory<T>(_ serviceType: T.Type, factory: @escaping () -> T) -> Self
+    @discardableResult func registerSingleton<T>(_ serviceType: T.Type, instance: T) -> Self
+    @discardableResult func registerLazySingleton<T>(_ serviceType: T.Type, factory: @escaping () -> T) -> Self
 
     func resolve<T>(_ serviceType: T.Type) -> T?
     func unregister<T>(_ serviceType: T.Type)
@@ -18,19 +18,25 @@ public class GetIt: DependencyContainer {
     private var singletons: [String: Any] = [:]
     private var lazySingletons: [String: () -> Any] = [:]
     
-    public func registerFactory<T>(_ serviceType: T.Type, factory: @escaping () -> T) {
+    @discardableResult public func registerFactory<T>(_ serviceType: T.Type, factory: @escaping () -> T) -> Self {
         let key = String(describing: serviceType)
         factories[key] = factory
+        
+        return self
     }
 
-    public func registerSingleton<T>(_ serviceType: T.Type, instance: T) {
+    @discardableResult public func registerSingleton<T>(_ serviceType: T.Type, instance: T) -> Self {
         let key = String(describing: serviceType)
         singletons[key] = instance
+        
+        return self
     }
 
-    public func registerLazySingleton<T>(_ serviceType: T.Type, factory: @escaping () -> T) {
+    @discardableResult public func registerLazySingleton<T>(_ serviceType: T.Type, factory: @escaping () -> T) -> Self {
         let key = String(describing: serviceType)
         lazySingletons[key] = factory
+        
+        return self
     }
 
     public func resolve<T>(_ serviceType: T.Type) -> T? {
