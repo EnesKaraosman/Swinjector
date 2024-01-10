@@ -1,9 +1,7 @@
 import XCTest
 @testable import Swinjector
 
-protocol TestProtocol {
-    func test() -> Void
-}
+protocol TestProtocol {}
 
 class TestClass: TestProtocol, Hashable, Identifiable {
     static func == (lhs: TestClass, rhs: TestClass) -> Bool {
@@ -12,10 +10,6 @@ class TestClass: TestProtocol, Hashable, Identifiable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(self))
-    }
-    
-    func test() {
-        debugPrint("Tested")
     }
 }
 
