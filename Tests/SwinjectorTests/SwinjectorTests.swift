@@ -1,21 +1,11 @@
 import XCTest
 @testable import Swinjector
 
-protocol TestProtocol {
-    func test() -> Void
-}
+protocol TestProtocol {}
 
-class TestClass: TestProtocol, Hashable, Identifiable {
+class TestClass: TestProtocol, Equatable {
     static func == (lhs: TestClass, rhs: TestClass) -> Bool {
         ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
-    }
-    
-    func test() {
-        debugPrint("Tested")
     }
 }
 
@@ -58,7 +48,34 @@ final class SwinjectorTests: XCTestCase {
     }
 }
 
-// `isRegistered` tests
+// MARK: resolve tests
+extension SwinjectorTests {
+    func testResolveFactoryInstance() throws {
+        getIt.registerFactory(TestProtocol.self) { TestClass() }
+        
+        XCTAssertNotNil(getIt(TestProtocol.self))
+    }
+    
+    func testResolveLazySingletonInstance() throws {
+        getIt.registerLazySingleton(TestProtocol.self) { TestClass() }
+        
+        XCTAssertNotNil(getIt(TestProtocol.self))
+    }
+    
+    func testResolveSingletonInstance() throws {
+        getIt.registerSingleton(TestProtocol.self, instance: TestClass())
+        
+        XCTAssertNotNil(getIt(TestProtocol.self))
+    }
+    
+    func testResolveShouldReturnNilForNonMatchingType() throws {
+        getIt.registerSingleton(Int.self, instance: 1)
+        
+        XCTAssertNil(getIt(TestProtocol.self))
+    }
+}
+
+// MARK: isRegistered tests
 extension SwinjectorTests {
     func testRegisterFactoryIsRegistered() throws {
         getIt.registerFactory(TestProtocol.self) {
@@ -83,7 +100,7 @@ extension SwinjectorTests {
     }
 }
 
-// `unregister` tests
+// MARK: unregister tests
 extension SwinjectorTests {
     func testUnregisterLazySingleton() throws {
         let clazz = TestClass()
