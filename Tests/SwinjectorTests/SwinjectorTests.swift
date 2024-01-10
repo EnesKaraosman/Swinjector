@@ -3,13 +3,9 @@ import XCTest
 
 protocol TestProtocol {}
 
-class TestClass: TestProtocol, Hashable, Identifiable {
+class TestClass: TestProtocol, Equatable {
     static func == (lhs: TestClass, rhs: TestClass) -> Bool {
         ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
     }
 }
 
