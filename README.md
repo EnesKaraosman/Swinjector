@@ -12,7 +12,7 @@ TODO
 - [ ] Add code documentation
 - [x] Add unit test execution github action
 - [x] Integrate code coverage app (codecov)
-  - [ ] Unit test code coverage %100
+  - [x] Unit test code coverage %100
 
 ## Register dependencies
 
