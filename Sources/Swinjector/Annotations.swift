@@ -7,10 +7,12 @@
 
 import Foundation
 
+/// Get registered service type by annotation
 @propertyWrapper public struct Injected<T> {
 
-    private var dependency: () -> T
+    private let dependency: () -> T
 
+    /// Pass service type to be resolved
     public init(_ serviceType: T.Type) {
         assert(GetIt.I.isRegistered(serviceType), "\(serviceType) is not registered to GetIt")
         dependency = { GetIt.I(serviceType)! }
@@ -19,12 +21,5 @@ import Foundation
     /// Manages the wrapped dependency.
     public var wrappedValue: () -> T {
         get { return dependency }
-        mutating set { dependency = newValue }
-    }
-
-    /// Unwraps the property wrapper granting access to the resolve/reset function.
-    public var projectedValue: Injected<T> {
-        get { return self }
-        mutating set { self = newValue }
     }
 }

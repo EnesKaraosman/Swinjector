@@ -6,10 +6,9 @@
 
 TODO
 
-- [ ] Easify registering and resolving dependency syntax
-- [ ] Add more annotations to register dependencies easily. Like @Singleton, @LazySingleton, @Factory (SwiftGen?)
+- [ ] Easify registering and resolving dependency syntax?
 - [ ] Support registering multiple instance of the same type?
-- [ ] Add code documentation
+- [x] Add code documentation
 - [x] Add unit test execution github action
 - [x] Integrate code coverage app (codecov)
   - [x] Unit test code coverage %100

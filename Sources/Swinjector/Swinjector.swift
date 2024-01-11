@@ -1,16 +1,23 @@
 public protocol DependencyContainer {
+    /// New factory instance is created (every time) once you resolve/get it
     func registerFactory<T>(_ serviceType: T.Type, factory: @escaping () -> T) -> Self
     
+    /// Registered singleton instance is already created by you
     func registerSingleton<T>(_ serviceType: T.Type, instance: T) -> Self
     
+    /// Registered lazy singleton instance is created once you resolve/get it
     func registerLazySingleton<T>(_ serviceType: T.Type, factory: @escaping () -> T) -> Self
     
+    /// Get registered instance, returns nil if the service is not registered
     func resolve<T>(_ serviceType: T.Type) -> T?
     
+    /// Unregister the registered service
     func unregister<T>(_ serviceType: T.Type)
     
+    /// Check if the service is registered
     func isRegistered<T>(_ serviceType: T.Type) -> Bool
     
+    /// Clean all the registered servies
     func reset()
 }
 
