@@ -2,8 +2,6 @@
 
 [![codecov](https://codecov.io/gh/EnesKaraosman/Swinjector/graph/badge.svg?token=4K5A5TQ9D6)](https://codecov.io/gh/EnesKaraosman/Swinjector)
 
-> This package is not ready to be used in production yet. It's created for PoC purpose.
-
 TODO
 
 - [ ] Easify registering and resolving dependency syntax?
